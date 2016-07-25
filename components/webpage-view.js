@@ -63,3 +63,34 @@ export default class WebPage extends Component {
 		this.props.navigator.pop();
 	}
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1
+	},
+
+	header: {
+		flex: 1,
+		justifyContent: 'space-between',
+		flexDirection: 'row',
+		backgroundColor: 'orangeRed'
+	},
+
+	headerItem: {
+		paddingLeft: 10,
+		paddingRight: 10,
+		justifyContent: 'center'
+	}
+
+	body: {
+		flex: 9
+	}
+
+	pageTitle: {
+		color: '#ffffff'
+	},
+
+	spinner: {
+		alignItem: 'flex-end'
+	}
+})
