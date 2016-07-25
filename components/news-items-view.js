@@ -19,11 +19,11 @@ export default class NewsItems extends Component {
 		super(props);
 		this.state = {
 		  title: 'Ice Peak',
-          dataSource: new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-          }),
-          news: {},
-          loaded: false
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
+      news: {},
+      loaded: false
 		}
 	}
 
@@ -65,7 +65,9 @@ export default class NewsItems extends Component {
 	viewPage(url) {
 		this.props.navigator.push({
 			name: 'webPage',
-			url: url
+			params: {
+				url: url
+			}
 		});
 	}
 
@@ -92,16 +94,13 @@ export default class NewsItems extends Component {
 		fetch('https://raw.githubusercontent.com/abruzzi/ice-peak/master/data/topstories.json')
 		.then((response) => response.json())
 		.then((stories) => {
-			console.log('----------------');
-			console.log(stories);
-			console.log('----------------');
-			
-			stories.each((story) => {
+
+			stories.forEach((story) => {
 				let url = "https://raw.githubusercontent.com/abruzzi/ice-peak/master/data/item/" + story + ".json"
 
 				fetch(url).then((response) => response.json()).then((content) => {
 					newsItems.push(content);
-					
+
 					this.updateNewsItemsUI(newsItems);
 					this.updateNewsItemsDB(newsItems);
 				})
@@ -168,7 +167,9 @@ const styles = StyleSheet.create({
 	},
 
 	headerText: {
-		color: '#ffffff'
+		color: '#ffffff',
+		fontWeight: 'bold',
+		fontSize: 16,
 	},
 
 	button: {

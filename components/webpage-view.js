@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 
 import {
 	View,
@@ -12,6 +12,10 @@ import Button from 'react-native-button';
 import GiftedSpinner from 'react-native-gifted-spinner';
 
 export default class WebPage extends Component {
+	static propTypes = {
+		url: PropTypes.string.isRequired
+	}
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -25,7 +29,7 @@ export default class WebPage extends Component {
 				<View style={styles.header}>
 					<View style={styles.headerItem}>
 						<Button style={styles.button} onPress={this.back.bind(this)}>Back</Button>
-					</View>	
+					</View>
 					<View style={styles.headerItem}>
 						<Text style={styles.pageTitle}>{this.truncate(this.state.pageTitle)}</Text>
 					</View>	
@@ -38,7 +42,7 @@ export default class WebPage extends Component {
 
 				<View style={styles.body}>
 					<WebView 
-					url={this.props.url}
+					source={{url: this.props.url}}
 					onNavigationStateChange={this.onNavigationStateChange.bind(this)}
 					></WebView>						
 				</View>	
@@ -73,24 +77,29 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'space-between',
 		flexDirection: 'row',
-		backgroundColor: 'orangeRed'
+		backgroundColor: 'orangered'
 	},
 
 	headerItem: {
 		paddingLeft: 10,
 		paddingRight: 10,
 		justifyContent: 'center'
-	}
+	},
 
 	body: {
 		flex: 9
-	}
+	},
+	
+	button: {
+		color: '#ffffff',
+		fontWeight: 'normal'
+	},
 
 	pageTitle: {
 		color: '#ffffff'
 	},
 
 	spinner: {
-		alignItem: 'flex-end'
+		alignItems: 'flex-end'
 	}
 })
