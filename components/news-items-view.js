@@ -30,8 +30,6 @@ export default class NewsItems extends Component {
 	componentDidMount() {
 		AsyncStorage.getItem('newsItems').then((news) => {
 			let items = JSON.parse(news);
-			console.log('-------------------');
-			console.log(items);
 			if(items) {
 				AsyncStorage.getItem('time').then((timeStr) => {
 					let time = JSON.parse(timeStr);
@@ -72,12 +70,7 @@ export default class NewsItems extends Component {
 	}
 
 	updateNewsItemsUI(newsItems) {
-		console.log('++++++++++++++++++++++');
-		console.log(newsItems);
-		console.log(newsItems.length);
-
 		if(newsItems.length == 5) {
-			console.log('00000000000000000000');
 			let ds = this.state.dataSource.cloneWithRows(newsItems);
 			this.setState({
 				'news': ds,
@@ -94,28 +87,21 @@ export default class NewsItems extends Component {
 
 	getNews() {
 		let newsItems = [];
-		console.log('------------+++++++++++++');
 		AsyncStorage.setItem('time', JSON.stringify({'cache': moment()}));
 
-		// fetch('http://localhost:8081/data/topstories.json')
-		fetch('https://hacker-news.firebaseio.com/v0/beststories.json')
+		fetch('https://raw.githubusercontent.com/abruzzi/ice-peak/master/data/topstories.json')
 		.then((response) => response.json())
 		.then((stories) => {
-			// let news = data;
-			
 			console.log('----------------');
 			console.log(stories);
 			console.log('----------------');
 			
-			// this.updateNewsItemsUI(news);
-			// this.updateNewsItemsDB(news);
-			
 			stories.each((story) => {
-				// let url = "http://localhost:8081/data/item/" + story + ".json"
-				let url = "https://hacker-news.firebaseio.com/v0/item/" + story + ".json"
+				let url = "https://raw.githubusercontent.com/abruzzi/ice-peak/master/data/item/" + story + ".json"
 
 				fetch(url).then((response) => response.json()).then((content) => {
 					newsItems.push(content);
+					
 					this.updateNewsItemsUI(newsItems);
 					this.updateNewsItemsDB(newsItems);
 				})
